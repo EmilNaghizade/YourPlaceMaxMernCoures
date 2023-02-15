@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 
+
+
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
@@ -11,6 +13,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
+ 
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showMap, setShowMap] = useState(false);
@@ -32,7 +35,7 @@ const PlaceItem = (props) => {
     setShowConfirmModal(false);
     try{
       await sendRequest(
-        `http://localhost:5000/api/places/${props.id}`,
+        process.env.REACT_APP_URL + `/places/${props.id}`,
         "DELETE",
         null,
         {
@@ -87,7 +90,7 @@ const PlaceItem = (props) => {
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img
-              src={`http://localhost:5000/` + props.image}
+              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
               alt={props.title}
             />
           </div>
